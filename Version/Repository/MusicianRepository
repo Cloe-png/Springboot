@@ -1,0 +1,21 @@
+package com.example.demo.repository;
+
+
+import com.example.demo.entity.Band;
+
+import com.example.demo.entity.Musician;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
+
+
+public interface MusicianRepository extends JpaRepository<Musician, Long> {
+
+    @Query("select b from Band b join b.musicians m where m.id = ?1")
+
+    List<Band> findAllBandsByMusicianId(long musicianId);
+
+}
