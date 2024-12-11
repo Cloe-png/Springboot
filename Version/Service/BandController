@@ -1,0 +1,66 @@
+package com.example.demo.service;
+
+
+import com.example.demo.api.model.BandNotFoundException;
+import com.example.demo.entity.Band;
+import com.example.demo.api.model.BandCreationRequest;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+
+@RestController
+
+@RequestMapping("/api/v1/bands")
+
+
+public class BandController {
+
+    private final BandService bandService;
+
+
+    public BandController(BandService bandService) {
+
+        this.bandService = bandService;
+
+    }
+
+
+/*
+
+@GetMapping("/health")
+
+public HealthStatus getHealthStatus() {
+
+return new HealthStatus(bandService.isHealthy());
+
+}
+
+*/
+
+
+    @PostMapping
+
+    public Band createBand(@RequestBody BandCreationRequest bandCreationRequest) {
+
+        return bandService.createBand(bandCreationRequest);
+
+    }
+
+
+    @GetMapping("/{id}")
+
+    public Band getBand(@PathVariable long id) throws BandNotFoundException {
+
+        return bandService.getBand(id).orElseThrow(() -> new BandNotFoundException());
+
+    }
+
+    @PatchMapping("/{bandId}/musicians")
+
+    public Band addMusiciansToBand(@PathVariable long bandId, @RequestBody List<Long> musicianIds) throws BandNotFoundException {
+
+        return bandService.addMusiciansToBand(bandId, musicianIds).orElseThrow(() -> new BandNotFoundException());
+
+    }
+
+}
