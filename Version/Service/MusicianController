@@ -1,0 +1,60 @@
+package com.example.demo.service;
+
+
+import com.example.demo.api.model.CreateMusicianRequest;
+import com.example.demo.api.model.MusicianNotFoundException;
+import com.example.demo.entity.Band;
+import com.example.demo.entity.Musician;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+
+@RestController
+
+@RequestMapping("/api/v1/musician")
+
+
+public class MusicianController {
+
+    private final MusicianService musicianService;
+
+    public MusicianController(MusicianService musicianService) {
+
+        this.musicianService = musicianService;
+
+    }
+
+    @PostMapping("/test")
+
+    public String test(){
+
+        return "coucou";
+
+    }
+
+    @PostMapping
+
+    public com.example.demo.entity.Musician createMusician(@RequestBody CreateMusicianRequest createMusicianRequest) {
+
+        return musicianService.createMusician(createMusicianRequest);
+
+    }
+
+    @GetMapping("/{id}")
+
+    public Musician getMusician(@PathVariable long id) throws MusicianNotFoundException {
+
+        return musicianService.getMusician(id).orElseThrow(() -> new MusicianNotFoundException());
+
+    }
+
+    @GetMapping("/bands/{musicianId}")
+
+    public List<Band> getBands(@PathVariable long musicianId) {
+
+        return musicianService.getBandsByMusicianId(musicianId);
+
+    }
+
+
+}
