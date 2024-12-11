@@ -1,0 +1,88 @@
+package com.example.demo.entity;
+
+import com.example.demo.repository.Band;
+import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+public class Festival {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String libelle;
+    private String ville;
+    private LocalDate date;
+    private Double tarif;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getLibelle() {
+        return libelle;
+    }
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
+    public String getVille() {
+        return ville;
+    }
+
+    public void setVille(String ville) {
+        this.ville = ville;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public Double getTarif() {
+        return tarif;
+    }
+
+    public void setTarif(Double tarif) {
+        this.tarif = tarif;
+    }
+
+    public List<Band> getBands() {
+        return bands;
+    }
+
+    public void setBands(List<Band> bands) {
+        this.bands = bands;
+    }
+
+    public Festival(Long id, String libelle, String ville, LocalDate date, Double tarif, List<Band> bands) {
+        this.id = id;
+        this.libelle = libelle;
+        this.ville = ville;
+        this.date = date;
+        this.tarif = tarif;
+        this.bands = bands;
+    }
+
+    @ManyToMany
+    @JoinTable(
+            name = "festival_band",
+            joinColumns = @JoinColumn(name = "festival_id"),
+            inverseJoinColumns = @JoinColumn(name = "band_id")
+    )
+    private List<Band> bands = new ArrayList<>();
+
+
+}
