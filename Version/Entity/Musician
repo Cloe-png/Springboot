@@ -44,5 +44,7 @@ public class Musician {
     }
     @OneToMany(mappedBy = "musician", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Instrument> instruments = new ArrayList<>();
+    @OneToMany(mappedBy = "musician", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<MusicianBand> musicianBands = new ArrayList<>();
 
 }
