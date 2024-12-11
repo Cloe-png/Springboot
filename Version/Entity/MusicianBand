@@ -1,0 +1,75 @@
+package com.example.demo.entity;
+
+import com.example.demo.repository.Band;
+import jakarta.persistence.*;
+import org.springframework.data.annotation.Id;
+
+import java.time.LocalDate;
+
+@Entity
+public class MusicianBand {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "musician_id", nullable = false)
+    private Musician musician;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Musician getMusician() {
+        return musician;
+    }
+
+    public void setMusician(Musician musician) {
+        this.musician = musician;
+    }
+
+    public Band getBand() {
+        return band;
+    }
+
+    public void setBand(Band band) {
+        this.band = band;
+    }
+
+    public LocalDate getJoinDate() {
+        return joinDate;
+    }
+
+    public void setJoinDate(LocalDate joinDate) {
+        this.joinDate = joinDate;
+    }
+
+    public LocalDate getLeaveDate() {
+        return leaveDate;
+    }
+
+    public void setLeaveDate(LocalDate leaveDate) {
+        this.leaveDate = leaveDate;
+    }
+
+    public MusicianBand(Long id, Musician musician, Band band, LocalDate joinDate, LocalDate leaveDate) {
+        this.id = id;
+        this.musician = musician;
+        this.band = band;
+        this.joinDate = joinDate;
+        this.leaveDate = leaveDate;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "band_id", nullable = false)
+    private Band band;
+
+    private LocalDate joinDate;
+    private LocalDate leaveDate;
+
+    
+}
