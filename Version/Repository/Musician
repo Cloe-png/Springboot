@@ -1,0 +1,96 @@
+package com.example.demo.repository;
+
+
+import com.example.demo.entity.Band;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+
+@Entity
+
+@Table(name = "MUSICIAN")
+
+public class Musician {
+
+
+    @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    private Long id;
+
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+
+    @JoinColumn(name = "person_id")
+
+    private Person person;
+
+
+    @ManyToMany(mappedBy = "musicians")
+
+    @JsonIgnore //needed to avoid infinite recursion
+
+    private List<Band> bands = new ArrayList<>();
+
+
+    public Musician() {
+
+    }
+
+
+    public Person getPerson() {
+
+        return person;
+
+    }
+
+
+    public void setPerson(Person person) {
+
+        this.person = person;
+
+    }
+
+
+    public Long getId() {
+
+        return id;
+
+    }
+
+
+    public void setId(Long id) {
+
+        this.id = id;
+
+    }
+
+
+    @Override
+
+    public boolean equals(Object o) {
+
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Musician musician = (Musician) o;
+
+        return Objects.equals(id, musician.id);
+
+    }
+
+
+    @Override
+
+    public int hashCode() {
+
+        return Objects.hash(id);
+
+    }
+
+}
