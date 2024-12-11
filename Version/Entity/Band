@@ -1,3 +1,4 @@
+import com.example.demo.entity.Festival;
 import com.example.demo.entity.Musician;
 import jakarta.persistence.*;
 import org.springframework.data.annotation.Id;
@@ -54,5 +55,7 @@ public class Band {
     public void setMusicians(List<Musician> allById) {
 
     }
+    @ManyToMany(mappedBy = "bands")
+    private List<Festival> festivals = new ArrayList<>();
 
 }
