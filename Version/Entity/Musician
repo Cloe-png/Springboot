@@ -42,5 +42,7 @@ public class Musician {
     public void setPerson(Person person) {
 
     }
+    @OneToMany(mappedBy = "musician", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Instrument> instruments = new ArrayList<>();
 
 }
